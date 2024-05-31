@@ -10,8 +10,24 @@
   align-items: center;
   justify-content: center;
   width: 80%;
+  height: 100vh;
   background-color: var(--couleur-acceuil);
   padding: 0vh 10% 0 10%;
+  color: var(--couleur-arriere-acceuil);
+  position: relative;
+}
+
+.intro_pays .remplissage {
+  fill: var(--couleur-arriere-acceuil);
+}
+
+.intro_pays + div {
+  position: relative;
+}
+
+.intro_pays + div > .vague > svg > path {
+  fill: purple;
+  z-index: 10;
 }
 
 .pays_contenu {
