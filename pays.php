@@ -53,7 +53,7 @@ function creation_destinations_pays(){
     );
     $contenu = "<div class = 'contenu__pays'>";
     foreach ($lesPays as $pays) {
-        $contenu .= "<button class='bouton__pays' id=" .$pays. ">".$pays."</button>";
+        $contenu .= "<button class='bouton__categorie bouton__pays' id=" .$pays. ">".$pays."</button>";
     }
     $contenu .= "</div>";
     $contenu .= "<div class='contenu__restapi_pays'></div>";

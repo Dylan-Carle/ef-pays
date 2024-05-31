@@ -2,11 +2,14 @@
     console.log("rest API")
     // URL de l'API REST de WordPress
     let pays = "France";
-    let url = `https://gftnth00.mywhc.ca/tim33/wp-json/wp/v2/posts?pays=${pays}`;
+    let url = `https://gftnth00.mywhc.ca/tim33/wp-json/wp/v2/posts?search=${pays}&_embed=true`;
     let bouton__pays = document.querySelectorAll(".bouton__pays");
     for(const bouton of bouton__pays){
         bouton.addEventListener("click", function(e){
             console.log(e.target.id);
+            pays = e.target.id;
+            url = `https://gftnth00.mywhc.ca/tim33/wp-json/wp/v2/posts?search=${pays}&_embed=true`;
+            ActualiserURL(url);
             
         });
     }
@@ -35,20 +38,33 @@
         // Par exemple, extraire les titres des articles comme dans l'exemple précédent
           restapi.innerHTML = "";
           data.forEach(function (article) {
-          indexCarte++;
           let titre = article.title.rendered;
           let contenu = article.content.rendered;
           contenu = contenu.substring(0, 75) + "...";
           console.log(titre);
           let carte = document.createElement("div");
-          carte.classList.add("restapi__carte");
+          carte.classList.add("restapi__pays");
           carte.style.animation = "apparitionCarte 1s ease "+ indexCarte/10 +"s forwards";
               
          carte.innerHTML = `
           <h2>${titre}</h2>
-          <p>${contenu}</p>
-          <p class="a__restApi"><a href="${article.link}">Lire la suite</a></p>
           `;
+            if(article._embedded['wp:featuredmedia']){
+                carte.innerHTML += `
+                <div class="pays_contenu">
+                <img src="${article._embedded['wp:featuredmedia'][0].source_url}" alt="${article._embedded['wp:featuredmedia'][0].alt_text}" class="img_pays"">
+                <p>${contenu}</p>
+                `;
+                
+            }
+            else{
+                carte.innerHTML += `
+                <div class="pays_contenu">
+                <img src="https://via.placeholder.com/150" alt="Image Introuvable" class="img_pays">
+                <p>${contenu}</p>
+                `;
+            
+            }
          restapi.appendChild(carte);
         });
       })
