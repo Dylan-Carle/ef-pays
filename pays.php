@@ -4,12 +4,12 @@
  * Version 1.0.0
  */
 /*
-Plugin name: Voyage
+Plugin name: Pays
 Plugin uri: https://github.com/Dylan-Carle
 Version: 1.0.0
 Description: Permet d'afficher les destinations disponibles dans les plus beaux pays du monde
 */
-function eddym_enqueue2()
+function eddym_enqueue3()
 {
 // filemtime // retourne en milliseconde le temps de la dernière modification
 // plugin_dir_path // retourne le chemin du répertoire du plugin
@@ -19,32 +19,46 @@ function eddym_enqueue2()
 // wp_enqueue_scripts // le hook
 
 $version_css = filemtime(plugin_dir_path( __FILE__ ) . "sass/style.css");
-$version_js = filemtime(plugin_dir_path(__FILE__) . "js/voyage.js");
-wp_enqueue_style(   'em_plugin_voyage_css',
+$version_js = filemtime(plugin_dir_path(__FILE__) . "js/pays.js");
+wp_enqueue_style(   'em_plugin_pays_css',
                      plugin_dir_url(__FILE__) . "sass/style.css",
                      array(),
                      $version_css);
 
-wp_enqueue_script(  'em_plugin_voyage_js',
-                    plugin_dir_url(__FILE__) ."js/voyage.js",
+wp_enqueue_script(  'em_plugin_pays_js',
+                    plugin_dir_url(__FILE__) ."js/pays.js",
                     array(),
                     $version_js,
                     true);
 }
-add_action('wp_enqueue_scripts', 'eddym_enqueue2');
+add_action('wp_enqueue_scripts', 'eddym_enqueue3');
 /* Création de la liste des destinations en HTML */
-function creation_destinations(){
+function creation_destinations_pays(){
 
+    $lesPays = array(
+        "France",
+        "États-Unis", 
+        "Canada", 
+        "Argentine", 
+        "Chili", 
+        "Belgique", 
+        "Maroc", 
+        "Mexique", 
+        "Japon", 
+        "Italie", 
+        "Islande", 
+        "Chine", 
+        "Grèce", 
+        "Suisse"
+    );
     $contenu = "<div class = 'contenu__pays'>";
-    foreach (get_categories() as $categorie) {
-        if($categorie->slug != "galerie"){
-            $contenu .= "<button class='bouton__categorie' id=".$categorie->slug. "_" .$categorie->term_id.">".$categorie->name."</button>";
-        }
+    foreach ($lesPays as $pays) {
+        $contenu .= "<button class='bouton__pays' id=" .$pays. ">".$pays."</button>";
     }
     $contenu .= "</div>";
     $contenu .= "<div class='contenu__restapi_pays'></div>";
     return $contenu;
 }
 
-add_shortcode('em_destination', 'creation_destinations');
+add_shortcode('pays', 'creation_destinations_pays');
 ?>
